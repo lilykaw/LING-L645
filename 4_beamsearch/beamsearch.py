@@ -1,3 +1,8 @@
+# Practical 4: beamsearch with CTC, plus minor improvements 
+# (discard low probability cells, avoid beam expansion until a certain threshold is reached)
+# https://cl.indiana.edu/~ftyers/courses/2022/Autumn/L-645/practicals/beamsearch/beamsearch.html
+
+
 from math import log
 import numpy as np
 import json
@@ -12,14 +17,29 @@ def beam_search_decoder(data, k):
 
     max_T, max_A = data.shape
 
+    start_expanding = False
+
     # Loop over time
     for t in range(max_T):
         all_candidates = list()
+        
+        # avoid beam expansion at the beginning until the probability reaches
+        # a threshold of 0.999
+        if data[t, 0] < 0.9999:
+            start_expanding = True
+        if not start_expanding:
+            continue
+
         # expand each current candidate
         for i in range(len(sequences)):
             seq, score = sequences[i]
             # Loop over possible alphabet outputs
             for c in range(max_A - 1):
+
+                # discard low probability cells in data matrix
+                if data[t, c] < 0.00001:
+                    continue
+                
                 candidate = [seq + [c], score - log(data[t, c])]
                 all_candidates.append(candidate)
         # order all candidates by score
@@ -63,12 +83,14 @@ logits = np.array(file["logits"])
 ### decode sequence
 # result = beam_search_decoder(data, beam_width) # provided dummy data
 result = beam_search_decoder(logits, beam_width)
+# print(result)
 
 ### print result
 output = []
 for i, seq in enumerate(result):
     for pred in seq[0]:
         output.append(alphabet[pred])
+    output.append("\n")
 prediction = ""
 for i,char in enumerate(output):
      if i==0 or char!=output[i-1]:
@@ -76,16 +98,9 @@ for i,char in enumerate(output):
 
 print(prediction)
 
-s = sns.heatmap(logits, annot=False, cbar=False, cmap="Blues")
-s.set(xlabel='predicted alphabet char', ylabel='logits')
-plt.xticks(np.arange(len(alphabet))+0.5, alphabet)
-plt.show()
+# s = sns.heatmap(logits, annot=False, cbar=False, cmap="Blues")
+# s.set(xlabel='predicted alphabet char', ylabel='logits')
+# plt.xticks(np.arange(len(alphabet))+0.5, alphabet)
+# plt.show()
 
 # "we must find a new home in the stars"
-
-
-### apply CTCdecoder_diff file to improve this beamsearch algorithm using CTC 
-### (connectionist temporal classification)
-# CTC summary: https://distill.pub/2017/ctc/
-# CTC implementation example 1: https://gist.githubusercontent.com/awni/56369a90d03953e370f3964c826ed4b0/raw/35b99ac85c5b4cfeb75682f059d3e876fe3a7d53/ctc_decoder.py
-# CTC implementation example 2: https://github.com/githubharald/CTCDecoder 
