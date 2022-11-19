@@ -1,3 +1,5 @@
+# Fran's example code
+
 import sys, math, re, pickle
 from collections import defaultdict, Counter
 
