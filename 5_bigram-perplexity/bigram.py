@@ -46,7 +46,7 @@ def get_perplexity(uni_dict, bi_dict):
 ### TRAIN ################################################################################
 ##########################################################################################
 print("Reading training data...\n")
-with open('toy_corpus.txt', 'r') as file:
+with open('train.txt', 'r') as file:
     train = file.readlines()
 
 # create unigrams and bigrams, plus their respective counters
@@ -158,7 +158,7 @@ print(f"Train set bigram perplexity: {train_bi_perp}\n") # 1.55579776754989
 ### (Perplexity is one measure of how likely a given language model will predict the test data)
 ##########################################################################################
 print("Reading test data...\n")
-with open('test_corpus.txt', 'r') as file:
+with open('test.txt', 'r') as file:
     test = file.readlines()
 new_test = preprocess(test)
 
@@ -244,29 +244,29 @@ test_bi_dict = defaultdict(lambda : defaultdict(float))
 for bigram in test_bi_counter: # Calculate probabilities
     test_bi_dict[bigram] = test_bi_counter[bigram] / test_uni_counter[bigram[0]]
 print(f"Test bigram dict: {test_bi_dict}\n")
-# """
-# Test bigram dict: defaultdict(<function <lambda> at 0x7fc6f01f4310>, {
-#     ('<BOS>', 'where'): 0.2, 
-#     ('where', 'are'): 1.0, 
-#     ('are', 'you'): 1.0, 
-#     ('you', '?'): 0.25, 
-#     ('<BOS>', 'were'): 0.2, 
-#     ('were', 'you'): 1.0, 
-#     ('you', 'in'): 0.5, 
-#     ('in', 'england'): 0.25, 
-#     ('england', '?'): 1.0, 
-#     ('<BOS>', 'are'): 0.4, 
-#     ('in', 'mexico'): 0.75, 
-#     ('mexico', '?'): 0.6666666666666666, 
-#     ('<BOS>', 'i'): 0.2, 
-#     ('i', 'am'): 1.0, 
-#     ('am', 'in'): 1.0, 
-#     ('mexico', '.'): 0.3333333333333333, 
-#     ('you', 'still'): 0.25, 
-#     ('still', 'in'): 1.0, 
-#     ('?', ''): 0.25
-# })
-# """
+"""
+Test bigram dict: defaultdict(<function <lambda> at 0x7fc6f01f4310>, {
+    ('<BOS>', 'where'): 0.2, 
+    ('where', 'are'): 1.0, 
+    ('are', 'you'): 1.0, 
+    ('you', '?'): 0.25, 
+    ('<BOS>', 'were'): 0.2, 
+    ('were', 'you'): 1.0, 
+    ('you', 'in'): 0.5, 
+    ('in', 'england'): 0.25, 
+    ('england', '?'): 1.0, 
+    ('<BOS>', 'are'): 0.4, 
+    ('in', 'mexico'): 0.75, 
+    ('mexico', '?'): 0.6666666666666666, 
+    ('<BOS>', 'i'): 0.2, 
+    ('i', 'am'): 1.0, 
+    ('am', 'in'): 1.0, 
+    ('mexico', '.'): 0.3333333333333333, 
+    ('you', 'still'): 0.25, 
+    ('still', 'in'): 1.0, 
+    ('?', ''): 0.25
+})
+"""
 
 print("Evaluating model on test corpus...\n")
 model = pickle.load(open('bigram_model.lm', 'rb'))
@@ -276,8 +276,3 @@ model = pickle.load(open('bigram_model.lm', 'rb'))
 test_uni_perp, test_bi_perp = get_perplexity(test_uni_counter, model)
 print(f"Test set unigram perplexity: {test_uni_perp}") # 3.64690859356563
 print(f"Test set bigram perplexity: {test_bi_perp}\n") # 1.6008005239652336
-
-## scrap -- we want to test the model trained on training data
-# test_uni_perp, test_bi_perp = get_perplexity(test_uni_counter, test_bi_dict)
-# print(f"Test set unigram perplexity: {test_uni_perp}") 
-# print(f"Test set bigram perplexity: {test_bi_perp}\n") 
