@@ -1,0 +1,6 @@
+lilykawaoto@Lilys-Air 5_FF-NN % python3 score.py < test.txt
+0.00003561      -10.24301960     ['<BOS>', 'where', 'are', 'you', '?']
+0.00000001      -18.28165702     ['<BOS>', 'were', 'you', 'in', 'england', '?']
+0.00000003      -17.45872477     ['<BOS>', 'are', 'you', 'in', 'mexico', '?']
+0.00000001      -18.57574159     ['<BOS>', 'i', 'am', 'in', 'mexico', '.']
+0.00000006      -16.56087341     ['<BOS>', 'are', 'you', 'still', 'in', 'mexico', '?']

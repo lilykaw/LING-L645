@@ -1,0 +1,25 @@
+lilykawaoto@Lilys-Air 5_FF-NN % python3 train.py < train.txt
+Epoch: 0 loss: 2.5215747356414795
+Epoch: 1 loss: 2.239712953567505
+Epoch: 2 loss: 1.931663990020752
+Epoch: 3 loss: 1.6158664226531982
+Epoch: 4 loss: 1.2929468154907227
+Epoch: 5 loss: 0.9857404828071594
+Epoch: 6 loss: 0.7496586441993713
+Epoch: 7 loss: 0.5930951237678528
+Epoch: 8 loss: 0.49058377742767334
+Epoch: 9 loss: 0.41823282837867737
+Model saved.
+
+
+Epoch: 0 loss: 3.246397018432617
+Epoch: 1 loss: 3.065948486328125
+Epoch: 2 loss: 2.8895390033721924
+Epoch: 3 loss: 2.6995792388916016
+Epoch: 4 loss: 2.4687395095825195
+Epoch: 5 loss: 2.2017433643341064
+Epoch: 6 loss: 1.9296221733093262
+Epoch: 7 loss: 1.6884437799453735
+Epoch: 8 loss: 1.4998401403427124
+Epoch: 9 loss: 1.363305687904358
+Model saved.
